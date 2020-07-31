@@ -1,0 +1,37 @@
+{{!< default}}
+{{! The tag above means - insert everything in this file into the {body} of the default.hbs template }}
+
+<div class="container">
+	<div class="row is-flex">
+		<div class="col-md-12">
+			{{#post}}
+			<div class="archive-cover {{#unless feature_image}}no-image{{/unless}}" {{#if feature_image}}style="background-image: url({{feature_image}});"{{/if}}>
+                <div class="overlay">
+                    <h1 class="archive-title">{{{title}}}</h1>
+                </div>
+            </div>
+			{{/post}}
+		</div>
+        {{#get "tags" limit="all" include="count.posts" order="count.posts desc"}}
+        {{#foreach tags}}
+        <div class="col-md-6">
+            <a href="{{url}}">
+                <div class="cover-wrap">
+                    <div class="tag-cover {{#unless feature_image}}no-image{{/unless}}" {{#if feature_image}}style="background-image: url({{feature_image}});"{{/if}}>
+                        <div class="overlay">
+                            <h2 class="tag-title h3">{{t "Tag:"}} {{name}}</h2>
+                            <div class="meta-info">
+                                <span><i class="fa fa-signal fa-fw"></i>{{t "Total"}} {{plural count.posts empty=(t "0 Post") singular=(t "% Post") plural=(t "% Posts")}}</span>
+                            </div>
+                            {{#if description}}
+                            <p class="description tag-description">{{description}}</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {{/foreach}}
+        {{/get}}
+	</div>
+</div>

@@ -1,0 +1,58 @@
+{{!< default}}
+{{! The tag above means - insert everything in this file into the {body} of the default.hbs template }}
+
+<div class="container">
+	<div class="row is-flex">
+		<div class="col-md-12">
+			{{#post}}
+			<div class="archive-cover {{#unless feature_image}}no-image{{/unless}}" {{#if feature_image}}style="background-image: url({{feature_image}});"{{/if}}>
+                <div class="overlay">
+                    <h1 class="archive-title">{{{title}}}</h1>
+                </div>
+            </div>
+			{{/post}}
+		</div>
+        {{#get "authors" limit="all" include="count.posts" order="count.posts desc"}}
+        {{#foreach authors}}
+        <div class="col-md-6">
+            <div class="cover-wrap">
+                <div class="author-cover {{#unless cover_image}}no-image{{/unless}}" {{#if cover_image}}style="background-image: url({{cover_image}});"{{/if}}>
+                    <div class="overlay">
+                        <div class="avatar-wrap">
+                            <a href="{{url}}">
+                            {{#if profile_image}}
+                                <img src="{{profile_image}}" alt="Author image" class="avatar">
+                                {{else}}
+                                <img src="{{asset "images/default-user-image.jpg"}}" alt="Author image" class="avatar">
+                            {{/if}}
+                            </a>
+                        </div>
+                        <h3 class="author-name">
+                            <a href="{{url}}">{{name}}</a>
+                        </h3>
+                        <div class="meta-info">
+                            <span class="post-count"><i class="fa fa-pencil-square-o fa-fw"></i>{{plural count.posts empty=(t "No posts") singular=(t "1 post") plural=(t "% posts")}}</span>
+                            {{#if location}}
+                            <span class="loaction"><i class="fa fa-map-marker fa-fw"></i>{{location}}</span>
+                            {{/if}}
+                            {{#if website}}
+                            <span class="website"><i class="fa fa-globe fa-fw"></i><a href="{{website}}" targer="_BLANK">Website</a></span>
+                            {{/if}}
+                            {{#if twitter}}
+                            <span class="twitter"><i class="fa fa-twitter fa-fw"></i><a href="{{twitter_url}}">Twitter</a></span>
+                            {{/if}}
+                            {{#if facebook}}
+                            <span class="facebook"><i class="fa fa-facebook fa-fw"></i><a href="{{facebook_url}}">Facebook</a></span>
+                            {{/if}}
+                        </div>
+                        {{#if bio}}
+                        <div class="bio">{{bio}}</div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/foreach}}
+        {{/get}}
+	</div>
+</div>

@@ -1,0 +1,120 @@
+{{!< default}}
+{{! The tag above means - insert everything in this file into the {body} of the default.hbs template }}
+
+<!-- start main content area -->
+<div class="container">
+	<!-- start big margin -->
+	<div class="row big-margin">
+		{{#get "posts" filter="featured:true" limit=@config.posts_per_page}}{{!----}}
+		{{#foreach posts}}{{!--visibility="all"--}}
+		{{#if @first}}
+	    	<div class="col-sm-12">
+	    		<div class="post-wrap first-post {{post_class}}">
+	    			<div class="featured-media">
+		    			<a href="{{url}}" title="{{{title}}}">
+							<div class="image-container" {{#if feature_image}} style="background-image: url({{feature_image}});" {{/if}}></div>
+						</a>
+						{{!--{{#if "tags"}}
+						<div class="tag-list">
+							{{tags separator=""}}
+						</div>
+						{{/if}}--}}
+						<div class="title-wrap">
+							<a href="{{url}}">
+								<h2 class="h4 title">{{{title}}}</h2>
+							</a>
+						</div>
+						{{!--{{#if featured}}
+	          	<div class="featured"><i class="fa fa-star"></i>{{t "Featured"}}</div>
+	          {{/if}}--}}
+					</div>
+				</div>
+			</div>
+	    {{else}}
+	    	<div class="col-md-6 col-sm-12">
+	    		<div class="post-wrap {{post_class}} above-fold-post">
+	    			<div class="featured-media">
+		    			<a href="{{url}}" title="{{{title}}}">
+		    				<div class="image-container" {{#if feature_image}} style="background-image: url({{feature_image}});" {{/if}}>
+							</div>
+						</a>
+						{{!--{{#if "tags"}}
+						<div class="tag-list">
+							{{tags separator=""}}
+						</div>
+						{{/if}}--}}
+						<div class="title-wrap">
+							<a href="{{url}}">
+								<h2 class="h5 title">{{{title}}}</h2>
+							</a>
+						</div>
+						{{!--{{#if featured}}
+	          	<div class="featured"><i class="fa fa-star"></i>{{t "Featured"}}</div>
+						{{/if}}--}}
+					</div>
+				</div>
+			</div>
+	    {{/if}}
+	    {{/foreach}}
+	    {{/get}}{{!----}}
+	</div>
+	<!-- end big margin -->
+	<div class="row">
+		<div class="col-md-8">
+			{{#foreach posts from="1" to="23" columns="2"}}
+			{{^if featured}}
+    		<div class="post-wrap {{post_class}} below-fold-post">
+    			<div class="featured-media">
+	    			<a href="{{url}}" title="{{{title}}}">
+	    				<div class="image-container" {{#if feature_image}} style="background-image: url({{feature_image}});" {{/if}}>
+						</div>
+					</a>
+					<div class="title-wrap">
+						<a href="{{url}}">
+							<h2 class="h5 title">{{{title}}}</h2>
+						</a>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+			{{/foreach}}
+
+			{{pagination}}
+
+			<hr>
+
+			{{!-- begin revcontent --}}
+			<div id="rcjsload_eddd9d"></div>
+
+			<script type="text/javascript">
+				(function() {
+					var referer="";try{if(referer=document.referrer,"undefined"==typeof referer||""==referer)throw"undefined"}catch(exception){referer=document.location.href,(""==referer||"undefined"==typeof referer)&&(referer=document.URL)}referer=referer.substr(0,700);
+					var rcds = document.getElementById("rcjsload_eddd9d");
+					var rcel = document.createElement("script");
+					rcel.id = 'rc_' + Math.floor(Math.random() * 1000);
+					rcel.type = 'text/javascript';
+					rcel.src = "https://trends.revcontent.com/serve.js.php?w=96028&t="+rcel.id+"&c="+(new Date()).getTime()+"&width="+(window.outerWidth || document.documentElement.clientWidth)+"&referer="+referer;
+					rcel.async = true;
+					rcds.appendChild(rcel);
+				})();
+			</script>
+			{{!-- end revcontent --}}
+
+		</div>
+
+		{{!--{{> sidebar}}
+	</div>
+</div>--}}
+<!-- end main content area -->
+
+<style>
+.above-fold-post .image-container {
+	min-height: 24em;
+}
+@media (min-width:990px) {
+	.below-fold-post {
+		width:49.5%;
+		display:inline-block;
+	}
+}
+</style>

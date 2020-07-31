@@ -1,0 +1,46 @@
+<div class="page-wrap">
+	<!-- start header -->
+	<header class="main-header">
+		<nav class="navbar navbar-default" id="main-navbar">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">{{t "Toggle navigation"}}</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					{{#if @site.logo}}
+						<a class="logo image-logo" href="{{@site.url}}"><img src="{{@site.logo}}" alt="{{@site.title}}" height="42" align="right" class="headerLogo"></a>
+					{{else}}
+						<a class="logo text-logo" href="{{@site.url}}">{{@site.title}}</a>
+					{{/if}}
+					<a href="#" id="search-open"><i class="fa fa-search"></i></a>
+					<div class="member-nav-wrap">
+						<span class="member-menu-icon"><i class="fa fa-user"></i></span>
+						{{#if @labs.members}}
+						<ul class="members-nav">
+							{{#if @member}}
+							<li class="nav-item"><a href="/account/">{{t "Account"}}</a></li>
+							<li class="nav-item menu-btn"><a href="#signout" data-members-signout>{{t "Sign out"}}</a></li>
+							{{else}}
+							<li class="nav-item menu-btn"><a href="/signup/">{{t "Subscribe"}}</a></li>
+							<li class="nav-item"><a href="/signin/">{{t "Sign in"}}</a></li>
+							{{/if}}
+						</ul>
+						{{/if}}
+					</div>
+				</div>
+				{{navigation}}
+			</div>
+		</nav>
+		<!---<div class="container logo-wrap">
+			{{#if @site.logo}}
+			<a class="logo image-logo" href="{{@site.url}}"><img src="{{@site.logo}}" alt="{{@site.title}}"></a>
+			{{else}}
+			<a class="logo text-logo" href="{{@site.url}}">{{@site.title}}</a>
+			{{/if}}
+		</div>--->
+		{{> secondary-bar}}
+	</header>
+	<!-- end header -->

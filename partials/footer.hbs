@@ -1,0 +1,152 @@
+	<footer class="main-footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						{{> widget-boycott}}
+						{{> widget-ad}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10 copyright">
+						 &copy; {{date format="YYYY"}} <a href="{{@site.url}}">{{@site.title}}</a>. {{t "All right Reserved."}} - {{{t "Powered by {ghostlink}"  ghostlink="<a href=\"https://ghost.org/\" target=\"blank\">Ghost</a>"}}}
+					</div>
+					<div class="col-sm-2">
+						<div class="feed-link-wrap">
+							<a href="{{@site.url}}/rss/"><i class="fa fa-rss-square"></i> {{t "Subscribe"}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+<a href="#" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+{{! insert search popup partial}}
+{{> search-popup}}
+{{> members/notifications}}
+{{ghost_foot}}
+<script type="text/javascript">
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script>if(typeof api_key != "undefined") {
+    var latestPosts = 'https://gunpowdermagazine.com/ghost/api/v3/content/posts/?key='+api_key+'&include=tags&limit='+Latest_slider_post_count;
+    var featuredSetOne = 'https://gunpowdermagazine.com/ghost/api/v3/content/posts/?key='+api_key+'&filter=tag:'+special_tag_one.toLowerCase()+'&include=tags&limit='+tag_one_post_count;
+    var featuredSetTwo = 'https://gunpowdermagazine.com/ghost/api/v3/content/posts/?key='+api_key+'&filter=tag:'+special_tag_two.toLowerCase()+'&include=tags&limit='+tag_two_post_count;
+    var searchApi = 'https://gunpowdermagazine.com/ghost/api/v3/content/posts/?key='+api_key+'&limit=all&fields=id,title,excerpt,custom_excerpt,url,published_at&formats=plaintext';
+}</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{{asset "js/bootstrap.min.js"}}"></script>
+<script src="{{asset "js/plugins.js"}}"></script>
+<script src="{{asset "js/main.js"}}"></script>
+
+
+
+<script>
+    // remove tags
+    var $tags = $("#tag-cloud");
+    [
+      'The Battle',
+      'Heritage',
+      'Guns and Gear',
+      'Second Amendment',
+      'Good Guys with Guns'
+    ].map(function (tag) {
+      $tags.find('a:contains(' + tag + ')').hide();
+    })
+
+    // subscribe form handler - footer
+    var $subscribeForm = $("#subscribe")
+    var $subscribeMessage = $("#subscribe-message")
+    $subscribeForm.submit(function(e) {
+      e.preventDefault();
+      var email = $(e.target).find('input[name=email]').val()
+      var payload = "confirm=&location=&referrer=&email=" + encodeURIComponent(email)
+      if (!email) return;
+      $subscribeForm.find('input').attr('disabled', 'disabled')
+      $subscribeForm.find('input[type=submit]').prop('value', 'Submitting...')
+      $.ajax({
+        url: '/subscribe/',
+        method: 'POST',
+        data: payload
+      })
+      .done(function (result) {
+        $subscribeForm.find('input[type=submit]').prop('value', 'You successfully subscribed!');
+      }).fail(function (jqxhr, textStatus, error) {
+        console.log(jqxhr);
+        $subscribeMessage.show().text('Something went wrong. Please refresh this page and try again.')
+      })
+    });
+
+    // subscribe form handler, non-mobile - header
+    var $subscribeHeader = $("#subscribe-header")
+    $subscribeHeader.submit(function(e) {
+      e.preventDefault();
+      var email = $(e.target).find('input[name=email]').val()
+      var payload = "confirm=&location=&referrer=&email=" + encodeURIComponent(email)
+      if (!email) return;
+      $subscribeHeader.find('input').attr('disabled', 'disabled')
+      $subscribeHeader.find('[type=submit]').text('Submitting...')
+      $.ajax({
+        url: '/subscribe/',
+        method: 'POST',
+        data: payload
+      })
+      .done(function (result) {
+        setTimeout(function() {
+          $subscribeHeader.hide().html("<em>You successfully subscribed!</em>").fadeIn();
+        }, 1000)
+
+      }).fail(function (jqxhr, textStatus, error) {
+        console.log(jqxhr);
+      })
+    });
+
+    // subscribe form handler, mobile - header
+    var $subscribeHeaderMobile = $("#subscribe-header-mobile")
+    $subscribeHeaderMobile.submit(function(e) {
+      e.preventDefault();
+      var email = $(e.target).find('input[name=email]').val()
+      var payload = "confirm=&location=&referrer=&email=" + encodeURIComponent(email)
+      if (!email) return;
+      $subscribeHeaderMobile.find('input').attr('disabled', 'disabled')
+      $subscribeHeaderMobile.find('[type=submit]').text('Submitting...')
+      $.ajax({
+        url: '/subscribe/',
+        method: 'POST',
+        data: payload
+      })
+      .done(function (result) {
+        setTimeout(function() {
+          $subscribeHeaderMobile.hide().html("<em>You successfully subscribed!</em>").fadeIn();
+        }, 1000)
+      }).fail(function (jqxhr, textStatus, error) {
+        console.log(jqxhr);
+      })
+    });
+
+    // subscribe form handler, mobile - header
+    var $contactForm = $("#contact")
+    $contactForm.submit(function(e) {
+      var userWantsToSubscribe = $contactForm.find('input:checked').length > 0
+      if (userWantsToSubscribe) {
+        var email = $(e.target).find('input[type=email]').val()
+        var payload = "confirm=&location=&referrer=&email=" + encodeURIComponent(email)
+        $.ajax({
+          url: '/subscribe/',
+          method: 'POST',
+          data: payload
+        })
+      }
+    });
+  </script>
